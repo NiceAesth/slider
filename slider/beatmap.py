@@ -1703,6 +1703,8 @@ class Beatmap:
         Should the letterbox appear during breaks.
     widescreen_storyboard : bool
         Should the storyboard be widescreen?
+    overlay_position: str
+        The position of the hitcircle number overlay.
     bookmarks : list[timedelta]
         The time for all of the bookmarks.
     distance_spacing : float
@@ -1771,6 +1773,7 @@ class Beatmap:
                  mode,
                  letterbox_in_breaks,
                  widescreen_storyboard,
+                 overlay_position,
                  bookmarks,
                  distance_spacing,
                  beat_divisor,
@@ -1806,6 +1809,7 @@ class Beatmap:
         self.mode = mode
         self.letterbox_in_breaks = letterbox_in_breaks
         self.widescreen_storyboard = widescreen_storyboard
+        self.overlay_position = overlay_position
         self.bookmarks = bookmarks
         self.distance_spacing = distance_spacing
         self.beat_divisor = beat_divisor
@@ -2662,6 +2666,12 @@ class Beatmap:
                 'General',
                 'WidescreenStoryboard',
                 False,
+            ),
+            overlay_position=_get_as_str(
+                groups,
+                'General',
+                'OverlayPosition',
+                None,
             ),
             bookmarks=[
                 timedelta(milliseconds=ms) for ms in _get_as_int_list(
