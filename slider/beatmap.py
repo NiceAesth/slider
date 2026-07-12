@@ -119,7 +119,7 @@ class TimingPoint:
         If this is an inherited timing point this value will be None.
         """
         ms_per_beat = self.ms_per_beat
-        if ms_per_beat < 0:
+        if ms_per_beat <= 0 or np.isnan(ms_per_beat):
             return None
         return round(60000 / ms_per_beat)
 
@@ -1418,6 +1418,8 @@ def _pack_float(field: str, float_in: float or int, default: any = no_default):
         Raised when ``float_in`` is not a float and default is not available.
     """
     float_in = _invalid_to_default(field, float_in, (int, float), default)
+    if not np.isfinite(float_in):
+        return "NaN" if np.isnan(float_in) else str(float_in)
     # try to give out an int-like string when packing float fields,
     # as osu! client does
     int_ = int(float_in)
